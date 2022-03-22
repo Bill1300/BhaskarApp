@@ -1,27 +1,110 @@
-import React, { useState } from "react"
+import React, { useState, useRef } from 'react'
 import {
   StyleSheet,
   Text,
   View,
   TextInput,
   TouchableOpacity,
-} from "react-native"
+} from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 //Components
-import MenuBtn from "../Components/MenuBtn"
-//Styles Global
-import { stylesGlobal } from "../stylesGlobal"
+import MenuBtn from '../Components/MenuBtn'
+//Styles global
+import { stylesGlobal } from '../stylesGlobal'
 
-function calcularFuncao(){
-    alert('Testeee')
-}
+export default function App() {
+  const [valA, setValA] = useState(null)
+  const [valB, setValB] = useState(null)
+  const [answer, setAnswer] = useState()
+  const [showBhaskaraFunction, setShowBhaskaraFunction] = useState()
 
-export default function MathFunction() {
+  //Funcao matematica apresentada ao usuario
+  const [showReturn, setShowReturn] = useState(false)
+
+  //Referencias de componentes de entrada
+  const ref_input1 = useRef()
+  const ref_input2 = useRef()
+
+  //Calcular raizes
+  const calcularFuncao = () => {
+    //Tratar erro de NaN em valores raizA raizB
+    const verifyNaN = (_answer) => {
+      let verifyNaN
+      verifyNaN = isFinite(_answer)
+      if (!verifyNaN) {
+        setAnswer('∄')
+      } else {
+        if (Number.isSafeInteger(_answer)){
+          parseInt(_answer)
+          setAnswer(_answer)
+        }else{
+          setAnswer(_answer.toFixed(1))
+        }
+      }
+    }
+
+    if (valA && valB) {
+      let _answer = (valB * -1)/valB
+      setAnswer(_answer)
+      verifyNaN(_answer)
+      setShowReturn(true)
+      createShowBhaskaraFunction(0, valA, valB)
+      return
+    }
+  }
+
+  //Formatar texto de função matemática.
+  const createShowBhaskaraFunction = (valA, valB, valC) => {
+    let txtValA, txtValB, txtValC
+    txtValA = valA + '𝑥²'
+    if (valA == 0) {
+      txtValA = ''
+    }
+    if (valA == 1) {
+      txtValA = '𝑥²'
+    }
+    if (valA == -1) {
+      txtValA = '-𝑥²'
+    }
+
+    txtValB = valB + '𝑥'
+    if (valB > 0) {
+      txtValB = '+' + valB + '𝑥'
+    }
+    if (valA == 0 && valB > 0) {
+      txtValB = valB + '𝑥'
+    }
+    if (valB == 1) {
+      txtValB = '+𝑥'
+    }
+    if (valB == -1) {
+      txtValB = '-𝑥'
+    }
+    if (valB == 0) {
+      txtValB = ''
+    }
+
+    txtValC = valC
+    if (valC > 0) {
+      txtValC = '+' + valC
+    }
+    if (valA == 0 && valB == 0 && valC > 0) {
+      txtValC = valC
+    }
+    if (valC == 0) {
+      txtValC = ''
+    }
+
+    let textReturn = (txtValA + txtValB + txtValC).toString()
+    setShowBhaskaraFunction(textReturn)
+  }
 
   return (
-    <View style={{flex: 1, backgroundColor: 'red',     alignItems: 'center', justifyContent: 'center'}}>
+    <View style={stylesGlobal.container}>
       <View style={styles.localButton}>
-        <MenuBtn/>
+        <MenuBtn />
       </View>
       <View style={stylesGlobal.row}>
         <Text style={[styles.title, styles.titleColor1]}>Bhaskar</Text>
@@ -31,19 +114,48 @@ export default function MathFunction() {
       <View>
         <TextInput
           style={[stylesGlobal.inputDefault, stylesGlobal.shadow]}
-          keyboardType="numeric"
-          placeholder="Valor de A"
-          placeholderTextColor="#7e7e7e"
+          ref={ref_input1}
+          keyboardType='numeric'
+          maxLength={20}
+          returnKeyType='next'
+          onSubmitEditing={() => ref_input2.current.focus()}
+          placeholder='Valor de A'
+          placeholderTextColor='#7e7e7e'
           onChangeText={(val) => setValA(val)}
         />
+        <View style={[stylesGlobal.row, styles.mathIconView]}>
+          <TouchableOpacity
+            style={[stylesGlobal.shadow]}
+            onPress={() => calcularFuncao()}>
+            <Icon style={styles.mathIcons} name='plus' size={40} color='#000' />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[stylesGlobal.shadow]}
+            onPress={() => calcularFuncao()}>
+            <Icon style={styles.mathIcons} name='minus' size={40} color='#000' />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[stylesGlobal.shadow]}
+            onPress={() => calcularFuncao()}>
+            <Icon style={styles.mathIcons} name='close' size={40} color='#000' />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[stylesGlobal.shadow]}
+            onPress={() => calcularFuncao()}>
+            <Icon style={styles.mathIcons} name='division' size={40} color='#000' />
+          </TouchableOpacity>
+        </View>
         <TextInput
           style={[stylesGlobal.inputDefault, stylesGlobal.shadow]}
-          keyboardType="numeric"
-          placeholder="Valor de B"
-          placeholderTextColor="#7e7e7e"
+          ref={ref_input2}
+          keyboardType='numeric'
+          maxLength={20}
+          returnKeyType='next'
+          onSubmitEditing={() => calcularFuncao()}
+          placeholder='Valor de B'
+          placeholderTextColor='#7e7e7e'
           onChangeText={(val) => setValB(val)}
         />
-
         <View>
           <TouchableOpacity
             style={[stylesGlobal.buttonDefault, stylesGlobal.shadow]}
@@ -55,9 +167,9 @@ export default function MathFunction() {
         {showReturn && (
           <View style={styles.viewReturn}>
             <View style={stylesGlobal.row}>
-              <Text style={styles.textNameReturn}>Delta</Text>
+              <Text style={styles.textNameReturn}>Resultado</Text>
               <Text style={[styles.textValueReturn, stylesGlobal.shadow]}>
-                {delta}
+                {answer}
               </Text>
             </View>
             <View style={[styles.bskView, stylesGlobal.shadow]}>
@@ -74,56 +186,56 @@ export default function MathFunction() {
 
 const styles = StyleSheet.create({
   localButton: {
-    position: "absolute",
+    position: 'absolute',
     right: 20,
     bottom: 20,
   },
   title: {
     fontSize: 28,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     //fontFamily: 'DeliusSwashCaps_400Regular'
   },
   titleColor1: {
-    color: "#fff",
+    color: '#fff',
   },
   titleColor2: {
-    color: "#ff6600",
+    color: '#ff6600',
   },
   subtitle: {
-    color: "#fff",
+    color: '#fff',
     marginBottom: 40,
   },
   viewReturn: {
     marginTop: 20,
   },
   textNameReturn: {
-    color: "#fff",
-    fontWeight: "bold",
-    textAlign: "left",
-    backgroundColor: "#ff6600",
+    color: '#fff',
+    fontWeight: 'bold',
+    textAlign: 'left',
+    backgroundColor: '#ff6600',
     margin: 4,
     width: 160,
     paddingVertical: 4,
     paddingHorizontal: 16,
     borderRadius: 5,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
     left: 2,
   },
   textValueReturn: {
-    color: "#000",
-    fontWeight: "bold",
-    textAlign: "center",
-    backgroundColor: "#fff",
+    color: '#000',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    backgroundColor: '#fff',
     margin: 4,
     width: 104,
     paddingVertical: 4,
     paddingHorizontal: 16,
     borderRadius: 5,
-    position: "absolute",
+    position: 'absolute',
     left: 136,
   },
   bskView: {
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     height: 40,
     width: 240,
     paddingVertical: 4,
@@ -131,10 +243,22 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   bskViewText: {
-    color: "#000",
-    fontWeight: "bold",
+    color: '#000',
+    fontWeight: 'bold',
     fontSize: 20,
-    textAlign: "center",
+    textAlign: 'center',
     letterSpacing: 2,
   },
+  mathIconView: {
+    justifyContent: 'space-around'
+  },
+
+  mathIcons: {
+    color: '#fff',
+    backgroundColor: '#ff6600',
+    marginVertical: 5,
+    paddingHorizontal: 6,
+    borderRadius: 6
+    
+  }
 })

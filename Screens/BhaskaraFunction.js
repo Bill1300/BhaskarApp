@@ -1,132 +1,130 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef } from 'react'
 import {
   StyleSheet,
   Text,
   View,
   TextInput,
   TouchableOpacity,
-} from "react-native";
+} from 'react-native'
 
 //Components
-import MenuBtn from "../Components/MenuBtn";
+import MenuBtn from '../Components/MenuBtn'
 //Styles global
-import { stylesGlobal } from "../stylesGlobal";
+import { stylesGlobal } from '../stylesGlobal'
 
 export default function App() {
-  const [valA, setValA] = useState(null);
-  const [valB, setValB] = useState(null);
-  const [valC, setValC] = useState(null);
-  const [raizA, setRaizA] = useState(null);
-  const [raizB, setRaizB] = useState(null);
-  const [delta, setDelta] = useState();
-  const [showBhaskaraFunction, setShowBhaskaraFunction] = useState();
+  const [valA, setValA] = useState(null)
+  const [valB, setValB] = useState(null)
+  const [valC, setValC] = useState(null)
+  const [raizA, setRaizA] = useState(null)
+  const [raizB, setRaizB] = useState(null)
+  const [delta, setDelta] = useState()
+  const [showBhaskaraFunction, setShowBhaskaraFunction] = useState()
 
   //Funcao matematica apresentada ao usuario
-  const [showReturn, setShowReturn] = useState(false);
+  const [showReturn, setShowReturn] = useState(false)
 
   //Referencias de componentes de entrada
-  const ref_input1 = useRef();
-  const ref_input2 = useRef();
-  const ref_input3 = useRef();
+  const ref_input1 = useRef()
+  const ref_input2 = useRef()
+  const ref_input3 = useRef()
 
   //Calcular raizes
   const calcularRaizes = () => {
     //Tratar erro de NaN em valores raizA raizB
     const verifyNaN = () => {
-      var verifyNaN;
-      verifyNaN = isFinite(raizA);
+      var verifyNaN
+      verifyNaN = isFinite(raizA)
       if (!verifyNaN) {
-        setRaizA("∄");
+        setRaizA('∄')
       } else {
         if (Number.isSafeInteger(raizA)){
           parseInt(raizA)
           setRaizA(raizA)
         }else{
-          setRaizA(raizA.toFixed(1));
+          setRaizA(raizA.toFixed(1))
         }
       }
 
-      verifyNaN = isFinite(raizB);
+      verifyNaN = isFinite(raizB)
       if (!verifyNaN) {
-        setRaizB("∄");
+        setRaizB('∄')
       } else {
         if (Number.isSafeInteger(raizB)){
           parseInt(raizB)
           setRaizB(raizB)
         }else{
-          setRaizB(raizB.toFixed(1));
+          setRaizB(raizB.toFixed(1))
         }
       }
 
-      verifyNaN = isFinite(_delta);
+      verifyNaN = isFinite(_delta)
       if (!verifyNaN) {
-        setDelta("∄");
+        setDelta('∄')
       } else {
-        setDelta(_delta);
+        setDelta(_delta)
       }
-    };
-    setValA(valA);
-    setValB(valB);
-    setValC(valC);
-    if (valA && valB && valC) {
-      var _delta = Math.pow(valB, 2) - 4 * valA * valC;
-      if (!(valA && valB && valC)) {
-        setShowReturn(false);
-      }
-      var raizA = (-valB + Math.sqrt(_delta)) / (2 * valA);
-      var raizB = (-valB - Math.sqrt(_delta)) / (2 * valA);
-      verifyNaN();
-      setShowReturn(true);
-      createShowBhaskaraFunction(valA, valB, valC);
-      return;
     }
-  };
+    setValA(valA)
+    setValB(valB)
+    setValC(valC)
+    
+    if (valA && valB && valC) {
+      var _delta = Math.pow(valB, 2) - 4 * valA * valC
+      var raizA = (-valB + Math.sqrt(_delta)) / (2 * valA)
+      var raizB = (-valB - Math.sqrt(_delta)) / (2 * valA)
+      verifyNaN()
+      setShowReturn(true)
+      createShowBhaskaraFunction(valA, valB, valC)
+      return
+    }
+  }
 
   //Formatar texto de função matemática.
   const createShowBhaskaraFunction = (valA, valB, valC) => {
-    var txtValA, txtValB, txtValC;
-    txtValA = valA + "𝑥²";
+    let txtValA, txtValB, txtValC
+    txtValA = valA + '𝑥²'
     if (valA == 0) {
-      txtValA = "";
+      txtValA = ''
     }
     if (valA == 1) {
-      txtValA = "𝑥²";
+      txtValA = '𝑥²'
     }
     if (valA == -1) {
-      txtValA = "-𝑥²";
+      txtValA = '-𝑥²'
     }
 
-    txtValB = valB + "𝑥";
+    txtValB = valB + '𝑥'
     if (valB > 0) {
-      txtValB = "+" + valB + "𝑥";
+      txtValB = '+' + valB + '𝑥'
     }
     if (valA == 0 && valB > 0) {
-      txtValB = valB + "𝑥";
+      txtValB = valB + '𝑥'
     }
     if (valB == 1) {
-      txtValB = "+𝑥";
+      txtValB = '+𝑥'
     }
     if (valB == -1) {
-      txtValB = "-𝑥";
+      txtValB = '-𝑥'
     }
     if (valB == 0) {
-      txtValB = "";
+      txtValB = ''
     }
 
-    txtValC = valC;
+    txtValC = valC
     if (valC > 0) {
-      txtValC = "+" + valC;
+      txtValC = '+' + valC
     }
     if (valA == 0 && valB == 0 && valC > 0) {
-      txtValC = valC;
+      txtValC = valC
     }
     if (valC == 0) {
-      txtValC = "";
+      txtValC = ''
     }
 
-    var textReturn = (txtValA + txtValB + txtValC).toString();
-    setShowBhaskaraFunction(textReturn);
-  };
+    let textReturn = (txtValA + txtValB + txtValC).toString()
+    setShowBhaskaraFunction(textReturn)
+  }
 
   return (
     <View style={stylesGlobal.container}>
@@ -142,34 +140,34 @@ export default function App() {
         <TextInput
           style={[stylesGlobal.inputDefault, stylesGlobal.shadow]}
           ref={ref_input1}
-          keyboardType="numeric"
+          keyboardType='numeric'
           maxLength={20}
-          returnKeyType="next"
+          returnKeyType='next'
           onSubmitEditing={() => ref_input2.current.focus()}
-          placeholder="Valor de A"
-          placeholderTextColor="#7e7e7e"
+          placeholder='Valor de A'
+          placeholderTextColor='#7e7e7e'
           onChangeText={(val) => setValA(val)}
         />
         <TextInput
           style={[stylesGlobal.inputDefault, stylesGlobal.shadow]}
           ref={ref_input2}
-          keyboardType="numeric"
+          keyboardType='numeric'
           maxLength={20}
-          returnKeyType="next"
+          returnKeyType='next'
           onSubmitEditing={() => ref_input3.current.focus()}
-          placeholder="Valor de B"
-          placeholderTextColor="#7e7e7e"
+          placeholder='Valor de B'
+          placeholderTextColor='#7e7e7e'
           onChangeText={(val) => setValB(val)}
         />
         <TextInput
           style={[stylesGlobal.inputDefault, stylesGlobal.shadow]}
           ref={ref_input3}
-          keyboardType="numeric"
+          keyboardType='numeric'
           maxLength={20}
-          returnKeyType="next"
+          returnKeyType='next'
           onSubmitEditing={() => calcularRaizes()}
-          placeholder="Valor de C"
-          placeholderTextColor="#7e7e7e"
+          placeholder='Valor de C'
+          placeholderTextColor='#7e7e7e'
           onChangeText={(val) => setValC(val)}
         />
         <View>
@@ -199,6 +197,7 @@ export default function App() {
               <Text style={[styles.textValueReturn, stylesGlobal.shadow]}>
                 {delta}
               </Text>
+              {/* information-outline */}
             </View>
             <View style={[styles.bskView, stylesGlobal.shadow]}>
               <Text style={[styles.bskViewText, styles.shadowStyle]}>
@@ -209,61 +208,61 @@ export default function App() {
         )}
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   localButton: {
-    position: "absolute",
+    position: 'absolute',
     right: 20,
     bottom: 20,
   },
   title: {
     fontSize: 28,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     //fontFamily: 'DeliusSwashCaps_400Regular'
   },
   titleColor1: {
-    color: "#fff",
+    color: '#fff',
   },
   titleColor2: {
-    color: "#ff6600",
+    color: '#ff6600',
   },
   subtitle: {
-    color: "#fff",
+    color: '#fff',
     marginBottom: 40,
   },
   viewReturn: {
     marginTop: 20,
   },
   textNameReturn: {
-    color: "#fff",
-    fontWeight: "bold",
-    textAlign: "left",
-    backgroundColor: "#ff6600",
+    color: '#fff',
+    fontWeight: 'bold',
+    textAlign: 'left',
+    backgroundColor: '#ff6600',
     margin: 4,
     width: 160,
     paddingVertical: 4,
     paddingHorizontal: 16,
     borderRadius: 5,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
     left: 2,
   },
   textValueReturn: {
-    color: "#000",
-    fontWeight: "bold",
-    textAlign: "center",
-    backgroundColor: "#fff",
+    color: '#000',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    backgroundColor: '#fff',
     margin: 4,
     width: 104,
     paddingVertical: 4,
     paddingHorizontal: 16,
     borderRadius: 5,
-    position: "absolute",
+    position: 'absolute',
     left: 136,
   },
   bskView: {
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     height: 40,
     width: 240,
     paddingVertical: 4,
@@ -271,10 +270,10 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   bskViewText: {
-    color: "#000",
-    fontWeight: "bold",
+    color: '#000',
+    fontWeight: 'bold',
     fontSize: 20,
-    textAlign: "center",
+    textAlign: 'center',
     letterSpacing: 2,
   },
-});
+})

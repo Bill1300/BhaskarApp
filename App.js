@@ -19,7 +19,7 @@ function MathFunctionScreen({navigation}){
 export default function App() {
   return(
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='BhaskarAppHome'>
+      <Stack.Navigator initialRouteName='BhaskarAppMathFunctionScreen'>
         <Stack.Screen name='BhaskarAppHome' component={BhaskaraFunctionScreen} options={{headerShown: false}}/>
         <Stack.Screen name='BhaskarAppMathFunctionScreen' component={MathFunctionScreen} options={{headerShown: false}}/>
       </Stack.Navigator>

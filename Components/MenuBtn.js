@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { StyleSheet, View, TouchableOpacity } from "react-native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { StyleSheet, View, TouchableOpacity } from "react-native"
+import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 
 //Styles Global
 import { stylesGlobal } from "../stylesGlobal";
@@ -17,18 +17,15 @@ export default function App() {
   };
 
   const navigationCalculator = (navigation) => {
-    alert("Em desenvolvimento. (Calculator)");
-    //navigation.navigate('BhaskarAppMathFunctionScreen')
+    alert("Em desenvolvimento. (Calculator)")
   };
 
   const navigationMathFunction = () => {
-    alert("Em desenvolvimento. (Função Matemática)");
-    //navigation.navigate('BhaskarAppMathFunctionScreen')
+    alert("Em desenvolvimento. (Função Matemática)")
   };
 
   const navigationGoBack = () => {
-    alert("Em desenvolvimento. (Voltar)");
-    //navigation.navigate('BhaskarAppMathFunctionScreen')
+    alert("Em desenvolvimento. (Voltar)")
   };
 
   return (

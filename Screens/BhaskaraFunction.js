@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,7 +9,7 @@ import {
 
 //Components
 import MenuBtn from "../Components/MenuBtn";
-//Styles Global
+//Styles global
 import { stylesGlobal } from "../stylesGlobal";
 
 export default function App() {
@@ -21,7 +21,13 @@ export default function App() {
   const [delta, setDelta] = useState();
   const [showBhaskaraFunction, setShowBhaskaraFunction] = useState();
 
+  //Funcao matematica apresentada ao usuario
   const [showReturn, setShowReturn] = useState(false);
+
+  //Referencias de componentes de entrada
+  const ref_input1 = useRef();
+  const ref_input2 = useRef();
+  const ref_input3 = useRef();
 
   //Calcular raizes
   const calcularRaizes = () => {
@@ -32,14 +38,26 @@ export default function App() {
       if (!verifyNaN) {
         setRaizA("∄");
       } else {
-        setRaizA(raizA.toFixed(1));
+        if (Number.isSafeInteger(raizA)){
+          parseInt(raizA)
+          setRaizA(raizA)
+        }else{
+          setRaizA(raizA.toFixed(1));
+        }
       }
+
       verifyNaN = isFinite(raizB);
       if (!verifyNaN) {
         setRaizB("∄");
       } else {
-        setRaizB(raizB.toFixed(1));
+        if (Number.isSafeInteger(raizB)){
+          parseInt(raizB)
+          setRaizB(raizB)
+        }else{
+          setRaizB(raizB.toFixed(1));
+        }
       }
+
       verifyNaN = isFinite(_delta);
       if (!verifyNaN) {
         setDelta("∄");
@@ -123,21 +141,33 @@ export default function App() {
       <View>
         <TextInput
           style={[stylesGlobal.inputDefault, stylesGlobal.shadow]}
+          ref={ref_input1}
           keyboardType="numeric"
+          maxLength={20}
+          returnKeyType="next"
+          onSubmitEditing={() => ref_input2.current.focus()}
           placeholder="Valor de A"
           placeholderTextColor="#7e7e7e"
           onChangeText={(val) => setValA(val)}
         />
         <TextInput
           style={[stylesGlobal.inputDefault, stylesGlobal.shadow]}
+          ref={ref_input2}
           keyboardType="numeric"
+          maxLength={20}
+          returnKeyType="next"
+          onSubmitEditing={() => ref_input3.current.focus()}
           placeholder="Valor de B"
           placeholderTextColor="#7e7e7e"
           onChangeText={(val) => setValB(val)}
         />
         <TextInput
           style={[stylesGlobal.inputDefault, stylesGlobal.shadow]}
+          ref={ref_input3}
           keyboardType="numeric"
+          maxLength={20}
+          returnKeyType="next"
+          onSubmitEditing={() => calcularRaizes()}
           placeholder="Valor de C"
           placeholderTextColor="#7e7e7e"
           onChangeText={(val) => setValC(val)}

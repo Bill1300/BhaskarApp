@@ -44,8 +44,7 @@ export default function MathFunction({ navigation }) {
     };
 
     if (valA && valB) {
-      let _answer = (valB * -1) / valB;
-
+      let _answer = Number(valA) + Number(valB);
       setAnswer(_answer);
       verifyNaN(_answer);
       setShowReturn(true);

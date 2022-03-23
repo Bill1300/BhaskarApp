@@ -12,7 +12,8 @@ import MenuBtn from '../Components/MenuBtn'
 //Styles global
 import { stylesGlobal } from '../stylesGlobal'
 
-export default function App() {
+export default function BhaskaraFunction({navigation}) {
+  
   const [valA, setValA] = useState(null)
   const [valB, setValB] = useState(null)
   const [valC, setValC] = useState(null)
@@ -129,7 +130,7 @@ export default function App() {
   return (
     <View style={stylesGlobal.container}>
       <View style={styles.localButton}>
-        <MenuBtn />
+        <MenuBtn navigation={navigation}/>
       </View>
       <View style={stylesGlobal.row}>
         <Text style={[styles.title, styles.titleColor1]}>Bhaskar</Text>

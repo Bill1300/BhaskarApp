@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 //Styles Global
 import { stylesGlobal } from '../stylesGlobal'
 
-export default function App() {
+export default function MenuBtn({navigation}) {
   const [menuBtn, setMenuBtn] = useState(false)
 
   const openMenu = () => {
@@ -14,18 +14,6 @@ export default function App() {
     } else {
       setMenuBtn(true)
     }
-  }
-
-  const navigationCalculator = (navigation) => {
-    alert('Em desenvolvimento. (Calculator)')
-  }
-
-  const navigationMathFunction = () => {
-    alert('Em desenvolvimento. (Função Matemática)')
-  }
-
-  const navigationGoBack = () => {
-    alert('Em desenvolvimento. (Voltar)')
   }
 
   return (
@@ -39,15 +27,15 @@ export default function App() {
       {menuBtn && (
         <View>
           <View style={[styles.subViewBtnBack, styles.iconBack]}>
-            <TouchableOpacity onPress={() => navigationGoBack()}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
               <Icon name='chevron-left' size={35} color='#fff' />
             </TouchableOpacity>
           </View>
-          <View style={[styles.subViewBtnFunc, styles.icons, ]}>
-            <TouchableOpacity onPress={() => navigationCalculator()}>
+          <View style={[styles.subViewBtnFunc, styles.icons ]}>
+            <TouchableOpacity onPress={() => navigation.navigate('CalculatorFunction')}>
               <Icon name='calculator-variant' size={40} color='#000' />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigationMathFunction()}>
+            <TouchableOpacity onPress={() => navigation.navigate('MathFunction')}>
               <Icon name='function-variant' size={40} color='#000' />
             </TouchableOpacity>
           </View>

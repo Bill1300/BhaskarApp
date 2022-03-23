@@ -21,7 +21,7 @@ export const stylesGlobal = StyleSheet.create({
     },
     shadowOpacity: 0.8,
     shadowRadius: 9,
-    elevation: 16,
+    elevation: 10,
   },
   inputDefault: {
     height: 40,

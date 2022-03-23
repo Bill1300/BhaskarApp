@@ -4,24 +4,18 @@ import { createStackNavigator } from '@react-navigation/stack'
 import 'react-native-gesture-handler'
 
 import BhaskaraFunction from './Screens/BhaskaraFunction'
-import MathFunction from './Screens/MathFunction' 
+import MathFunction from './Screens/MathFunction'
+import CalculatorFunction from './Screens/CalculatorFunction'
 
 const Stack = createStackNavigator()
-
-function BhaskaraFunctionScreen({navigation}){
-  return <BhaskaraFunction/>
-}
-
-function MathFunctionScreen({navigation}){
-  return <MathFunction/>
-}
 
 export default function App() {
   return(
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='BhaskarAppMathFunctionScreen'>
-        <Stack.Screen name='BhaskarAppHome' component={BhaskaraFunctionScreen} options={{headerShown: false}}/>
-        <Stack.Screen name='BhaskarAppMathFunctionScreen' component={MathFunctionScreen} options={{headerShown: false}}/>
+      <Stack.Navigator initialRouteName='BhaskaraFunction'>
+        <Stack.Screen name='BhaskaraFunction' component={BhaskaraFunction} options={{headerShown: false}}/>
+        <Stack.Screen name='MathFunction' component={MathFunction} options={{headerShown: false}}/>
+        <Stack.Screen name='CalculatorFunction' component={CalculatorFunction} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   )

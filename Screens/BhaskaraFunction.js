@@ -9,6 +9,8 @@ import {
 
 //Components
 import MenuBtn from "../Components/MenuBtn";
+//AuxiliarFunctions
+import { createShowBhaskaraFunction } from "../AuxiliarFunctions";
 //Styles global
 import { stylesGlobal } from "../stylesGlobal";
 
@@ -65,6 +67,7 @@ export default function BhaskaraFunction({ navigation }) {
         setDelta(_delta);
       }
     };
+
     setValA(valA);
     setValB(valB);
     setValC(valC);
@@ -74,55 +77,11 @@ export default function BhaskaraFunction({ navigation }) {
       var raizA = (-valB + Math.sqrt(_delta)) / (2 * valA);
       var raizB = (-valB - Math.sqrt(_delta)) / (2 * valA);
       verifyNaN();
+
+      let textReturn = createShowBhaskaraFunction(valA, valB, valC);
+      setShowBhaskaraFunction(textReturn);
       setShowReturn(true);
-      createShowBhaskaraFunction(valA, valB, valC);
     }
-  };
-
-  //Formatar texto de função matemática.
-  const createShowBhaskaraFunction = (valA, valB, valC) => {
-    let txtValA, txtValB, txtValC;
-    txtValA = valA + "𝑥²";
-    if (valA == 0) {
-      txtValA = "";
-    }
-    if (valA == 1) {
-      txtValA = "𝑥²";
-    }
-    if (valA == -1) {
-      txtValA = "-𝑥²";
-    }
-
-    txtValB = valB + "𝑥";
-    if (valB > 0) {
-      txtValB = "+" + valB + "𝑥";
-    }
-    if (valA == 0 && valB > 0) {
-      txtValB = valB + "𝑥";
-    }
-    if (valB == 1) {
-      txtValB = "+𝑥";
-    }
-    if (valB == -1) {
-      txtValB = "-𝑥";
-    }
-    if (valB == 0) {
-      txtValB = "";
-    }
-
-    txtValC = valC;
-    if (valC > 0) {
-      txtValC = "+" + valC;
-    }
-    if (valA == 0 && valB == 0 && valC > 0) {
-      txtValC = valC;
-    }
-    if (valC == 0) {
-      txtValC = "";
-    }
-
-    let textReturn = (txtValA + txtValB + txtValC).toString();
-    setShowBhaskaraFunction(textReturn);
   };
 
   return (
@@ -143,7 +102,7 @@ export default function BhaskaraFunction({ navigation }) {
           maxLength={20}
           returnKeyType="next"
           onSubmitEditing={() => ref_input2.current.focus()}
-          placeholder="Valor de A"
+          placeholder="Valor de A: Ax²"
           placeholderTextColor="#7e7e7e"
           onChangeText={(val) => setValA(val)}
         />
@@ -154,7 +113,7 @@ export default function BhaskaraFunction({ navigation }) {
           maxLength={20}
           returnKeyType="next"
           onSubmitEditing={() => ref_input3.current.focus()}
-          placeholder="Valor de B"
+          placeholder="Valor de B: Bx"
           placeholderTextColor="#7e7e7e"
           onChangeText={(val) => setValB(val)}
         />
@@ -165,7 +124,7 @@ export default function BhaskaraFunction({ navigation }) {
           maxLength={20}
           returnKeyType="next"
           onSubmitEditing={() => calcularRaizes()}
-          placeholder="Valor de C"
+          placeholder="Valor de C: C"
           placeholderTextColor="#7e7e7e"
           onChangeText={(val) => setValC(val)}
         />

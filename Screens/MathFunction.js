@@ -22,6 +22,8 @@ export default function MathFunction({ navigation }) {
   const [answer, setAnswer] = useState();
   const [showBhaskaraFunction, setShowBhaskaraFunction] = useState();
 
+  const [operation, setOperation] = useState(null);
+
   //Funcao matematica apresentada ao usuario
   const [showReturn, setShowReturn] = useState(false);
 
@@ -36,18 +38,19 @@ export default function MathFunction({ navigation }) {
   const ref_btn3 = useRef();
 
   const operationBtn = (index) => {
-    // Addition
-    if (index == 0) {
-    }
-    // Subtraction
-    if (index == 1) {
-    }
-    // Multiplication
-    if (index == 2) {
-    }
-    // Division
-    if (index == 3) {
-    }
+    // // Addition
+    // if (index == 1) {
+    // }
+    // // Subtraction
+    // if (index == 2) {
+    // }
+    // // Multiplication
+    // if (index == 3) {
+    // }
+    // // Division
+    // if (index == 4) {
+    // }
+    setOperation(index);
   };
 
   //Calcular raizes
@@ -63,13 +66,25 @@ export default function MathFunction({ navigation }) {
           parseInt(_answer);
           setAnswer(_answer);
         } else {
-          setAnswer(_answer.toFixed(1));
+          setAnswer(_answer.toFixed(4));
         }
       }
     };
 
-    if (valA && valB && valAns) {
-      //let _answer = Number(valA) + Number(valB);
+    if (valA && valB && valAns && operation) {
+      let _answer
+      if(operation == 1){
+        _answer = (Number(valAns) - Number(valB))/Number(valA)
+      }
+      if(operation == 2){
+        _answer = (Number(valAns) + Number(valB))/Number(valA)
+      }
+      if(operation == 3){
+        _answer = (Number(valAns) / Number(valB))/Number(valA)
+      }
+      if(operation == 4){
+        _answer = (Number(valAns) * Number(valB))/Number(valA)
+      }
 
       setAnswer(_answer);
       verifyNaN(_answer);
@@ -107,7 +122,7 @@ export default function MathFunction({ navigation }) {
           {/* Adição */}
           <TouchableOpacity
             style={[styles.iconTouch, stylesGlobal.shadow]}
-            onPress={() => operationBtn(0)}
+            onPress={() => operationBtn(1)}
             ref={ref_btn0}
           >
             <Icon name="plus" size={40} color="#fff" />
@@ -115,7 +130,7 @@ export default function MathFunction({ navigation }) {
           {/* Subtração */}
           <TouchableOpacity
             style={[styles.iconTouch, stylesGlobal.shadow]}
-            onPress={() => operationBtn(1)}
+            onPress={() => operationBtn(2)}
             ref={ref_btn1}
           >
             <Icon name="minus" size={40} color="#fff" />
@@ -123,7 +138,7 @@ export default function MathFunction({ navigation }) {
           {/* Multiplicacão */}
           <TouchableOpacity
             style={[styles.iconTouch, stylesGlobal.shadow]}
-            onPress={() => operationBtn(2)}
+            onPress={() => operationBtn(3)}
             ref={ref_btn2}
           >
             <Icon name="close" size={40} color="#fff" />
@@ -131,7 +146,7 @@ export default function MathFunction({ navigation }) {
           {/* Divisão */}
           <TouchableOpacity
             style={[styles.iconTouch, stylesGlobal.shadow]}
-            onPress={() => operationBtn(3)}
+            onPress={() => operationBtn(4)}
             ref={ref_btn3}
           >
             <Icon name="division" size={40} color="#fff" />
@@ -167,7 +182,7 @@ export default function MathFunction({ navigation }) {
             <Text style={stylesGlobal.buttonDefaultText}>Calcular</Text>
           </TouchableOpacity>
         </View>
-        {showReturn && (
+        {(showReturn && operation) ? (
           <View style={styles.viewReturn}>
             <View style={stylesGlobal.row}>
               <Text style={styles.textNameReturn}>Resultado</Text>
@@ -181,7 +196,7 @@ export default function MathFunction({ navigation }) {
               </Text>
             </View>
           </View>
-        )}
+        ) : <View></View>}
       </View>
     </View>
   );

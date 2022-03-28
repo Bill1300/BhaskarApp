@@ -6,15 +6,19 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 //Components
 import MenuBtn from "../Components/MenuBtn";
+//AuxiliarFunctions
+import { createShowBhaskaraFunction } from "../AuxiliarFunctions";
 //Styles global
 import { stylesGlobal } from "../stylesGlobal";
 
 export default function MathFunction({ navigation }) {
   const [valA, setValA] = useState(null);
   const [valB, setValB] = useState(null);
+  const [valAns, setValAns] = useState(null);
   const [answer, setAnswer] = useState();
   const [showBhaskaraFunction, setShowBhaskaraFunction] = useState();
 
@@ -24,6 +28,27 @@ export default function MathFunction({ navigation }) {
   //Referencias de componentes de entrada
   const ref_input1 = useRef();
   const ref_input2 = useRef();
+  const ref_input3 = useRef();
+
+  const ref_btn0 = useRef();
+  const ref_btn1 = useRef();
+  const ref_btn2 = useRef();
+  const ref_btn3 = useRef();
+
+  const operationBtn = (index) => {
+    // Addition
+    if (index == 0) {
+    }
+    // Subtraction
+    if (index == 1) {
+    }
+    // Multiplication
+    if (index == 2) {
+    }
+    // Division
+    if (index == 3) {
+    }
+  };
 
   //Calcular raizes
   const calcularFuncao = () => {
@@ -43,60 +68,17 @@ export default function MathFunction({ navigation }) {
       }
     };
 
-    if (valA && valB) {
-      let _answer = Number(valA) + Number(valB);
+    if (valA && valB && valAns) {
+      //let _answer = Number(valA) + Number(valB);
+
       setAnswer(_answer);
       verifyNaN(_answer);
+
+      let textReturn = createShowBhaskaraFunction(0, valA, valB);
+      textReturn = textReturn + " = " + String(valAns);
+      setShowBhaskaraFunction(textReturn);
       setShowReturn(true);
-      createShowBhaskaraFunction(0, valA, valB);
-      return;
     }
-  };
-
-  //Formatar texto de função matemática.
-  const createShowBhaskaraFunction = (valA, valB, valC) => {
-    let txtValA, txtValB, txtValC;
-    txtValA = valA + "𝑥²";
-    if (valA == 0) {
-      txtValA = "";
-    }
-    if (valA == 1) {
-      txtValA = "𝑥²";
-    }
-    if (valA == -1) {
-      txtValA = "-𝑥²";
-    }
-
-    txtValB = valB + "𝑥";
-    if (valB > 0) {
-      txtValB = "+" + valB + "𝑥";
-    }
-    if (valA == 0 && valB > 0) {
-      txtValB = valB + "𝑥";
-    }
-    if (valB == 1) {
-      txtValB = "+𝑥";
-    }
-    if (valB == -1) {
-      txtValB = "-𝑥";
-    }
-    if (valB == 0) {
-      txtValB = "";
-    }
-
-    txtValC = valC;
-    if (valC > 0) {
-      txtValC = "+" + valC;
-    }
-    if (valA == 0 && valB == 0 && valC > 0) {
-      txtValC = valC;
-    }
-    if (valC == 0) {
-      txtValC = "";
-    }
-
-    let textReturn = (txtValA + txtValB + txtValC).toString();
-    setShowBhaskaraFunction(textReturn);
   };
 
   return (
@@ -117,20 +99,65 @@ export default function MathFunction({ navigation }) {
           maxLength={20}
           returnKeyType="next"
           onSubmitEditing={() => ref_input2.current.focus()}
-          placeholder="Valor de A"
+          placeholder="Valor de A: Ax"
           placeholderTextColor="#7e7e7e"
           onChangeText={(val) => setValA(val)}
         />
+        <View style={[styles.iconView, stylesGlobal.row]}>
+          {/* Adição */}
+          <TouchableOpacity
+            style={[styles.iconTouch, stylesGlobal.shadow]}
+            onPress={() => operationBtn(0)}
+            ref={ref_btn0}
+          >
+            <Icon name="plus" size={40} color="#fff" />
+          </TouchableOpacity>
+          {/* Subtração */}
+          <TouchableOpacity
+            style={[styles.iconTouch, stylesGlobal.shadow]}
+            onPress={() => operationBtn(1)}
+            ref={ref_btn1}
+          >
+            <Icon name="minus" size={40} color="#fff" />
+          </TouchableOpacity>
+          {/* Multiplicacão */}
+          <TouchableOpacity
+            style={[styles.iconTouch, stylesGlobal.shadow]}
+            onPress={() => operationBtn(2)}
+            ref={ref_btn2}
+          >
+            <Icon name="close" size={40} color="#fff" />
+          </TouchableOpacity>
+          {/* Divisão */}
+          <TouchableOpacity
+            style={[styles.iconTouch, stylesGlobal.shadow]}
+            onPress={() => operationBtn(3)}
+            ref={ref_btn3}
+          >
+            <Icon name="division" size={40} color="#fff" />
+          </TouchableOpacity>
+        </View>
         <TextInput
           style={[stylesGlobal.inputDefault, stylesGlobal.shadow]}
           ref={ref_input2}
           keyboardType="numeric"
           maxLength={20}
           returnKeyType="next"
-          onSubmitEditing={() => calcularFuncao()}
-          placeholder="Valor de B"
+          onSubmitEditing={() => ref_input3.current.focus()}
+          placeholder="Valor de B: B"
           placeholderTextColor="#7e7e7e"
           onChangeText={(val) => setValB(val)}
+        />
+        <TextInput
+          style={[stylesGlobal.inputDefault, stylesGlobal.shadow]}
+          ref={ref_input3}
+          keyboardType="numeric"
+          maxLength={20}
+          returnKeyType="next"
+          onSubmitEditing={() => calcularFuncao()}
+          placeholder="Resultado"
+          placeholderTextColor="#7e7e7e"
+          onChangeText={(val) => setValAns(val)}
         />
         <View>
           <TouchableOpacity
@@ -224,5 +251,16 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
     letterSpacing: 2,
+  },
+  iconView: {
+    justifyContent: "space-between",
+    padding: 2,
+    marginHorizontal: 2,
+  },
+  iconTouch: {
+    backgroundColor: "#ff6600",
+    marginHorizontal: 4,
+    padding: 4,
+    borderRadius: 10,
   },
 });

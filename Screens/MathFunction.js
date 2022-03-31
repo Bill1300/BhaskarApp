@@ -230,7 +230,7 @@ export default function MathFunction({ navigation }) {
         {showReturn && operation ? (
           <View style={styles.viewReturn}>
             <View style={stylesGlobal.row}>
-              <Text style={styles.textNameReturn}>Resultado</Text>
+              <Text style={styles.textNameReturn}>Solução</Text>
               <Text style={[styles.textValueReturn, stylesGlobal.shadow]}>
                 {answer}
               </Text>

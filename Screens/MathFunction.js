@@ -11,7 +11,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 //Components
 import MenuBtn from "../Components/MenuBtn";
 //AuxiliarFunctions
-import { createShowBhaskaraFunction } from "../AuxiliarFunctions";
+import { createShowFunctionMath } from "../AuxiliarFunctions";
 //Styles global
 import { stylesGlobal } from "../stylesGlobal";
 
@@ -32,64 +32,77 @@ export default function MathFunction({ navigation }) {
   const ref_input2 = useRef();
   const ref_input3 = useRef();
 
-  const ref_btn0 = useRef();
-  const ref_btn1 = useRef();
-  const ref_btn2 = useRef();
-  const ref_btn3 = useRef();
+  const [btnSelected, setBtnSelected] = useState();
+  const [btn1, setBtn1] = useState(false);
+  const [btn2, setBtn2] = useState(false);
+  const [btn3, setBtn3] = useState(false);
+  const [btn4, setBtn4] = useState(false);
 
   const operationBtn = (index) => {
-    // // Addition
-    // if (index == 1) {
-    // }
-    // // Subtraction
-    // if (index == 2) {
-    // }
-    // // Multiplication
-    // if (index == 3) {
-    // }
-    // // Division
-    // if (index == 4) {
-    // }
+    // Addition
+    if (index == 1) {
+      setBtnSelected(index);
+      setBtn1(true);
+      setBtn2(false);
+      setBtn3(false);
+      setBtn4(false);
+    }
+    // Subtraction
+    if (index == 2) {
+      setBtnSelected(index);
+      setBtn1(false);
+      setBtn2(true);
+      setBtn3(false);
+      setBtn4(false);
+    }
+    // Multiplication
+    if (index == 3) {
+      setBtnSelected(index);
+      setBtn1(false);
+      setBtn2(false);
+      setBtn3(true);
+      setBtn4(false);
+    }
+    // Division
+    if (index == 4) {
+      setBtnSelected(index);
+      setBtn1(false);
+      setBtn2(false);
+      setBtn3(false);
+      setBtn4(true);
+    }
     setOperation(index);
   };
 
-  //Calcular raizes
+  //Calcular função
   const calcularFuncao = () => {
-    //Tratar erro de NaN em valores raizA raizB
-    const verifyNaN = (_answer) => {
-      let verifyNaN;
-      verifyNaN = isFinite(_answer);
-      if (!verifyNaN) {
-        setAnswer("∄");
+    if (valA && valA != 0 && valB && valAns && operation) {
+      let _answer;
+      if (operation == 1) {
+        _answer = (Number(valAns) - Number(valB)) / Number(valA);
+      }
+      if (operation == 2) {
+        _answer = (Number(valAns) + Number(valB)) / Number(valA);
+      }
+      if (operation == 3) {
+        _answer = Number(valAns) / Number(valB) / Number(valA);
+      }
+      if (operation == 4) {
+        _answer = (Number(valAns) * Number(valB)) / Number(valA);
+      }
+      if (isFinite(_answer)) {
+        setAnswer(
+          _answer
+            .toFixed(4)
+            .toString()
+            .replace(/(\.0+|0+)$/, "")
+            .replace(".", ",")
+        );
       } else {
-        if (Number.isSafeInteger(_answer)) {
-          parseInt(_answer);
-          setAnswer(_answer);
-        } else {
-          setAnswer(_answer.toFixed(4));
-        }
-      }
-    };
-
-    if (valA && valB && valAns && operation) {
-      let _answer
-      if(operation == 1){
-        _answer = (Number(valAns) - Number(valB))/Number(valA)
-      }
-      if(operation == 2){
-        _answer = (Number(valAns) + Number(valB))/Number(valA)
-      }
-      if(operation == 3){
-        _answer = (Number(valAns) / Number(valB))/Number(valA)
-      }
-      if(operation == 4){
-        _answer = (Number(valAns) * Number(valB))/Number(valA)
+        setAnswer("Indefinido");
       }
 
-      setAnswer(_answer);
-      verifyNaN(_answer);
-
-      let textReturn = createShowBhaskaraFunction(0, valA, valB);
+      let textReturn = createShowFunctionMath(valA, valB, btnSelected);
       textReturn = textReturn + " = " + String(valAns);
       setShowBhaskaraFunction(textReturn);
       setShowReturn(true);
@@ -114,42 +127,74 @@ export default function MathFunction({ navigation }) {
           maxLength={20}
           returnKeyType="next"
           onSubmitEditing={() => ref_input2.current.focus()}
-          placeholder="Valor de A: Ax"
+          placeholder="Valor de A: A𝑥"
           placeholderTextColor="#7e7e7e"
           onChangeText={(val) => setValA(val)}
         />
         <View style={[styles.iconView, stylesGlobal.row]}>
           {/* Adição */}
           <TouchableOpacity
-            style={[styles.iconTouch, stylesGlobal.shadow]}
+            style={[
+              styles.iconTouch,
+              stylesGlobal.shadow,
+              { backgroundColor: btn1 ? "#fff" : "#ff6600" },
+            ]}
             onPress={() => operationBtn(1)}
-            ref={ref_btn0}
+            key={1}
           >
-            <Icon name="plus" size={40} color="#fff" />
+            {btn1 ? (
+              <Icon name="plus" size={40} color="#ff6600" />
+            ) : (
+              <Icon name="plus" size={40} color="#fff" />
+            )}
           </TouchableOpacity>
           {/* Subtração */}
           <TouchableOpacity
-            style={[styles.iconTouch, stylesGlobal.shadow]}
+            style={[
+              styles.iconTouch,
+              stylesGlobal.shadow,
+              { backgroundColor: btn2 ? "#fff" : "#ff6600" },
+            ]}
             onPress={() => operationBtn(2)}
-            ref={ref_btn1}
+            key={2}
           >
-            <Icon name="minus" size={40} color="#fff" />
+            {btn2 ? (
+              <Icon name="minus" size={40} color="#ff6600" />
+            ) : (
+              <Icon name="minus" size={40} color="#fff" />
+            )}
           </TouchableOpacity>
           {/* Multiplicacão */}
           <TouchableOpacity
-            style={[styles.iconTouch, stylesGlobal.shadow]}
+            style={[
+              styles.iconTouch,
+              stylesGlobal.shadow,
+              { backgroundColor: btn3 ? "#fff" : "#ff6600" },
+            ]}
             onPress={() => operationBtn(3)}
-            ref={ref_btn2}
+            key={3}
           >
-            <Icon name="close" size={40} color="#fff" />
+            {btn3 ? (
+              <Icon name="close" size={40} color="#ff6600" />
+            ) : (
+              <Icon name="close" size={40} color="#fff" />
+            )}
           </TouchableOpacity>
           {/* Divisão */}
           <TouchableOpacity
-            style={[styles.iconTouch, stylesGlobal.shadow]}
+            style={[
+              styles.iconTouch,
+              stylesGlobal.shadow,
+              { backgroundColor: btn4 ? "#fff" : "#ff6600" },
+            ]}
             onPress={() => operationBtn(4)}
-            ref={ref_btn3}
+            key={4}
           >
-            <Icon name="division" size={40} color="#fff" />
+            {btn4 ? (
+              <Icon name="division" size={40} color="#ff6600" />
+            ) : (
+              <Icon name="division" size={40} color="#fff" />
+            )}
           </TouchableOpacity>
         </View>
         <TextInput
@@ -182,7 +227,7 @@ export default function MathFunction({ navigation }) {
             <Text style={stylesGlobal.buttonDefaultText}>Calcular</Text>
           </TouchableOpacity>
         </View>
-        {(showReturn && operation) ? (
+        {showReturn && operation ? (
           <View style={styles.viewReturn}>
             <View style={stylesGlobal.row}>
               <Text style={styles.textNameReturn}>Resultado</Text>
@@ -196,7 +241,9 @@ export default function MathFunction({ navigation }) {
               </Text>
             </View>
           </View>
-        ) : <View></View>}
+        ) : (
+          <View></View>
+        )}
       </View>
     </View>
   );

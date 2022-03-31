@@ -1,20 +1,20 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
-const _orange = '#ff6600';
-const _gray = '#333';
+const _orange = "#ff6600";
+const _gray = "#333";
 
 export const stylesGlobal = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: _gray,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   row: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   shadow: {
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 6,
@@ -28,7 +28,7 @@ export const stylesGlobal = StyleSheet.create({
     width: 240,
     padding: 8,
     margin: 6,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 6,
   },
   buttonDefault: {
@@ -37,14 +37,14 @@ export const stylesGlobal = StyleSheet.create({
     width: 240,
     paddingVertical: 4,
     margin: 6,
-    textShadowColor: '#000',
+    textShadowColor: "#000",
     borderRadius: 6,
   },
   buttonDefaultText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    color: "#fff",
+    fontWeight: "bold",
     fontSize: 20,
-    textAlign: 'center',
-    textTransform: 'uppercase',
+    textAlign: "center",
+    textTransform: "uppercase",
   },
 });

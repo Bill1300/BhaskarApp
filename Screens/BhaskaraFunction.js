@@ -11,6 +11,7 @@ import {
 import MenuBtn from "../Components/MenuBtn";
 //AuxiliarFunctions
 import { createShowBhaskaraFunction } from "../AuxiliarFunctions";
+
 //Styles global
 import { stylesGlobal } from "../stylesGlobal";
 
@@ -102,7 +103,7 @@ export default function BhaskaraFunction({ navigation }) {
           maxLength={20}
           returnKeyType="next"
           onSubmitEditing={() => ref_input2.current.focus()}
-          placeholder="Valor de A: Ax²"
+          placeholder="Valor de A: A𝑥²"
           placeholderTextColor="#7e7e7e"
           onChangeText={(val) => setValA(val)}
         />
@@ -113,7 +114,7 @@ export default function BhaskaraFunction({ navigation }) {
           maxLength={20}
           returnKeyType="next"
           onSubmitEditing={() => ref_input3.current.focus()}
-          placeholder="Valor de B: Bx"
+          placeholder="Valor de B: B𝑥"
           placeholderTextColor="#7e7e7e"
           onChangeText={(val) => setValB(val)}
         />

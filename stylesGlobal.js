@@ -10,6 +10,21 @@ export const stylesGlobal = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  tituloApp: {
+    fontSize: 28,
+    fontWeight: "bold",
+  },
+  tituloCor1: {
+    color: "#fff",
+  },
+  tituloCor2: {
+    color: "#ff6600",
+  },
+  subtitulo: {
+    color: "#fff",
+    marginBottom: 40,
+  },
+
   row: {
     flexDirection: "row",
   },

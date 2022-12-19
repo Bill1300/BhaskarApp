@@ -36,7 +36,7 @@ export default function MenuBtn({ navigation }) {
           )}
           <View style={[styles.subViewBtnFunc, styles.icons]}>
             <TouchableOpacity
-              onPress={() => navigation.navigate("CalculatorFunction")}
+              onPress={() => navigation.navigate("FractionFunction")}
             >
               <Icon name="calculator-variant" size={40} color="#000" />
             </TouchableOpacity>
@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 15,
+    zIndex:1,
   },
   subViewBtnFunc: {
     backgroundColor: "#fff",

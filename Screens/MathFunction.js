@@ -118,7 +118,7 @@ export default function MathFunction({ navigation }) {
         <Text style={[styles.title, styles.titleColor1]}>Bhaskar</Text>
         <Text style={[styles.title, styles.titleColor2]}>App</Text>
       </View>
-      <Text style={styles.subtitle}>Calculadora de funções</Text>
+      <Text style={styles.subtitle}>Calculadora de equações de 1º grau</Text>
       <View>
         <TextInput
           style={[stylesGlobal.inputDefault, stylesGlobal.shadow]}

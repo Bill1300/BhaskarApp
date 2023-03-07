@@ -39,7 +39,7 @@ export default function BhaskaraFunction({ navigation }) {
       var verifyNaN;
       verifyNaN = isFinite(raizA);
       if (!verifyNaN) {
-        setRaizA("∄");
+        setRaizA("∉ R");
       } else {
         if (Number.isSafeInteger(raizA)) {
           parseInt(raizA);
@@ -51,7 +51,7 @@ export default function BhaskaraFunction({ navigation }) {
 
       verifyNaN = isFinite(raizB);
       if (!verifyNaN) {
-        setRaizB("∄");
+        setRaizB("∉ R");
       } else {
         if (Number.isSafeInteger(raizB)) {
           parseInt(raizB);
@@ -63,7 +63,7 @@ export default function BhaskaraFunction({ navigation }) {
 
       verifyNaN = isFinite(_delta);
       if (!verifyNaN) {
-        setDelta("∄");
+        setDelta("∉ R");
       } else {
         setDelta(_delta);
       }
